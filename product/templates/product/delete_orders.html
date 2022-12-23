@@ -1,0 +1,29 @@
+{%extends 'base.html'%}
+
+{%block main_content%}
+<form action="." method="POST">
+    {%csrf_token%}
+    <ul id="myList">
+        {%for field in products%}
+        <li class="list-group-item d-flex align-items-center border-0 mb-2 rounded" style="background-color: #f4f6f7;">
+            <input class="form-check-input me-2" type="checkbox" name="delete[]" value={{field.id}} aria-label="..."
+                unchecked />
+            {{field.name}}
+        </li>
+        {%endfor%}
+    </ul>
+    <button type="submit" class="btn-warning" value="Submit">Submit</button>
+</form>
+
+{%endblock main_content%}
+
+
+
+<!-- <form action="{% url 'index' %}" method="POST">
+    {% csrf_token %}
+    <ul id="myList">
+        <li id="myId1">First Item <input type="hidden" name="mylist[]" value="myid1"></li>
+        <li id="myId2">Second Item <input type="hidden" name="mylist[]" value="myid2"></li>
+    </ul>
+    <button type="submit">Submit</button>
+</form> -->
