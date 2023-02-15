@@ -49,7 +49,7 @@
 
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                     <li>
-                        <a href="https://getbootstrap.com/docs/5.2/examples/headers/#" class="nav-link text-secondary">
+                        <a href="{% url 'main_page' %}" class="nav-link text-secondary">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24">
                                 <use xlink:href="#home"></use>
                             </svg>
@@ -57,7 +57,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://getbootstrap.com/docs/5.2/examples/headers/#" class="nav-link text-white">
+                        <a href="{% url 'main_page' %}" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24">
                                 <use xlink:href="#speedometer2"></use>
                             </svg>
@@ -65,29 +65,23 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://getbootstrap.com/docs/5.2/examples/headers/#" class="nav-link text-white">
+                        <a href="{% url 'product-list' %}" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24">
                                 <use xlink:href="#table"></use>
                             </svg>
-                            Orders
+                            My Orders
                         </a>
                     </li>
+                    {%if request.user.is_authenticated%}
                     <li>
-                        <a href="https://getbootstrap.com/docs/5.2/examples/headers/#" class="nav-link text-white">
-                            <svg class="bi d-block mx-auto mb-1" width="24" height="24">
-                                <use xlink:href="#grid"></use>
-                            </svg>
-                            Products
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://getbootstrap.com/docs/5.2/examples/headers/#" class="nav-link text-white">
+                        <a href="{% url 'customer-profile' request.user.id %}" class="nav-link text-white">
                             <svg class="bi d-block mx-auto mb-1" width="24" height="24">
                                 <use xlink:href="#people-circle"></use>
                             </svg>
-                            Customers
+                            Customer Profile
                         </a>
                     </li>
+                    {%endif%}
                     <li>
                         {%if request.user.is_authenticated %}
                         <div class="text-end">

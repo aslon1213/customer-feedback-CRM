@@ -27,12 +27,6 @@
     {% if messages %}
     <ul class="messages" class="alert alert-primary" style="list-style-type: none;">
         {% for message in messages %}
-        <li>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>{{message}}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        </li>
         {%if message.tags == 'info' %}
 
         <li>
@@ -43,7 +37,7 @@
         </li>
         {% elif message.tags == 'success' %}
         <li>
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>{{message}}</strong>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -65,7 +59,7 @@
     {% endblock main_content %}
 
 
-
+    {%include 'footer.html'%}
     {%include 'scripts.html'%}
 </body>
 

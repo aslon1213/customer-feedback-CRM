@@ -1,0 +1,17 @@
+{%extends 'base.html'%}
+
+{%block main_content%}
+<form action="." method="POST">
+    {%csrf_token%}
+    <ul id="myList">
+        {%for product in products%}
+        <li class="list-group-item d-flex align-items-center border-0 mb-2 rounded" style="background-color: #f4f6f7;">
+            <input class="form-check-input me-2" type="checkbox" name="change" value="{{product.id}}" unchecked />
+            {{product.name}}
+        </li>
+        {%endfor%}
+    </ul>
+    <button type="submit" class="btn-warning" value="Submit">Submit</button>
+</form>
+
+{%endblock main_content%}

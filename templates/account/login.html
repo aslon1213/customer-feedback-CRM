@@ -2,9 +2,44 @@
 
 
 {% block main_content %}
-<form method="POST" action="." enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+
+<div class="form-signin w-100 d-flex flex-row">
+    <div class="col-4 p-4"></div>
+    <div class="col-4 p-4 justify-content-center">
+        <form method="POST" action="." enctype="multipart/form-data">
+            <!-- <img class="mb-4" src="" alt="" width="72"
+            height="57"> -->
+            {% csrf_token %}
+
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+            {%for field in form%}
+            {%if field.name == 'remember'%}
+            <div class="checkbox mb-3">
+                <label>
+                    <input type="checkbox" name="remember" value="remember-me"> Remember me
+                </label>
+            </div>
+            {%elif field.name == 'password'%}
+            <div class="form-floating">
+
+                <input type="password" name="password" class="form-control" id="floatingInput">
+                <label for="floatingInput">{{field.name}}</label>
+            </div>
+            {%else%}
+            <div class="form-floating">
+
+                <input class="form-control" type="text" name="login" minlength="1" maxlength="150" id="floatingInput">
+                <label for="floatingInput">username</label>
+            </div>
+
+            {%endif%}
+            {%endfor%}
+
+            <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">©2022</p>
+        </form>
+    </div>
+    <div class="col-4 p-4"></div>
+
+</div>
 {% endblock main_content %}

@@ -1,6 +1,10 @@
 from uuid import UUID
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
+# staff member required decorator
+from django.contrib.admin.views.decorators import staff_member_required
+from django.contrib.auth.decorators import permission_required
 from django.contrib import messages
 
 # Create your views here.
@@ -9,12 +13,12 @@ from django.views.generic import ListView
 
 
 # import forms
-from .forms import CustomPostCreationForm
+from .forms import CustomProductCreationForm, CustomProductCreationManagerForm
 
 
 class ProductListView(ListView):
     model = Product
-    template_name = "to_do.html"
+    template_name = "product/orders_list.html"
     queryset = Product.objects.all()
     context_object_name = "products"
 
@@ -23,15 +27,32 @@ class ProductListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        products = Product.objects.all()
-        context["products"] = products
+        print(self.request.get_full_path())
+        if self.request.user.is_authenticated:
+            if self.request.user.is_staff:
+                products = Product.objects.all()
+            else:
+                products = Product.objects.filter(
+                    person_ordered_id=self.request.user.id
+                )
+            context["products"] = products
+
         context["num_products"] = products.count()
-        messages.success(self.request, "Product list has been updated.")
         return context
 
 
+def auto_make_products(request):
+    for i in range(100):
+        product = Product.objects.create(
+            name=f"Product {i}",
+            description=f"Product {i} description",
+        )
+        product.save()
+    return redirect("product-list")
+
+
 def create_product_order(request):
-    form = CustomPostCreationForm()
+    form = CustomProductCreationForm()
     print(request.method)
     if request.method == "POST":
         if request.user.is_authenticated:
@@ -44,6 +65,7 @@ def create_product_order(request):
                     is_customer=False,
                 )
                 product.save()
+                messages.success(request, f"Order has been succesfully added")
             else:
                 print("User is authenticated - not staff")
                 product = Product.objects.create(
@@ -53,6 +75,7 @@ def create_product_order(request):
                     is_customer=True,
                 )
                 product.save()
+                messages.success(request, f"Order has been succesfully added")
 
         else:
             print("User is not authenticated")
@@ -63,6 +86,7 @@ def create_product_order(request):
                 is_customer=True,
             )
             product.save()
+            messages.success(request, f"Order has been succesfully added")
 
     context = {
         "form": form,
@@ -71,11 +95,17 @@ def create_product_order(request):
     return render(request, "product/create_order.html", context)
 
 
+@login_required(login_url="account_login")
 def edit_product_order(request, pk):
     product = Product.objects.get(pk=pk)
-    form = CustomPostCreationForm(instance=product)
+    form = CustomProductCreationForm(instance=product)
+    if request.user.is_staff:
+        form = CustomProductCreationManagerForm(instance=product)
     if request.method == "POST":
-        form = CustomPostCreationForm(request.POST, instance=product)
+        if request.user.is_staff:
+            form = CustomProductCreationManagerForm(request.POST, instance=product)
+        else:
+            form = CustomProductCreationForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
             return redirect("product-list")
@@ -89,6 +119,8 @@ def edit_product_order(request, pk):
 @login_required(login_url="login")
 def delete_product_order(request, pk):
     products = Product.objects.filter(person_ordered_id=pk)
+    if request.user.is_staff:
+        products = Product.objects.all()
     if request.method == "POST":
         pks = request.POST.getlist("delete[]")
         # print(Product.objects.filter(id__in=pks))
@@ -125,3 +157,34 @@ def delete_product_order(request, pk):
         "type": "Delete",
     }
     return render(request, "product/delete_orders.html", context)
+
+
+@staff_member_required(login_url="main_page")
+def change_status(request):
+    products = Product.objects.all()
+
+    if request.method == "POST":
+        print(request.POST)
+        pks = request.POST.getlist("change")
+        print(pks)
+        products = Product.objects.filter(id__in=pks)
+        for product in products:
+            product.in_stock = True
+            product.number_in_stock += 1
+            product.save()
+            messages.success(
+                request, f"Product {product.name} has been succesfully edited"
+            )
+        return redirect("product-list")
+    context = {
+        "products": products,
+    }
+    return render(request, "product/change_status.html", context)
+
+
+def error_404(request, exception):
+    return render(request, "404/404.html", {})
+
+
+def main_view(request):
+    return render(request, "main.html")

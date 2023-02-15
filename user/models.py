@@ -8,11 +8,9 @@ from uuid import uuid4
 
 # Create your models here.
 class User(AbstractUser):
-    groups = models.ManyToManyField("auth.Group", related_name="Defaultuser")
-    user_permissions = models.ManyToManyField(
-        "auth.Permission", related_name="Deaultuser"
+    groups = models.ManyToManyField(
+        "auth.Group", related_name="Defaultuser", default="customer"
     )
-
     telephone_number = models.CharField(max_length=20, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
 

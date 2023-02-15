@@ -18,13 +18,16 @@ from django.urls import path, include
 
 # import products views
 from product.views import (
-    ProductListView,
+    main_view,
 )
 
 urlpatterns = [
-    path("", ProductListView.as_view(), name="main_page"),
+    path("", main_view, name="main_page"),
     path("admin/", admin.site.urls),
     path("products/", include("product.urls")),
     path("users/", include("user.urls")),
     path("accounts/", include("allauth.urls")),
 ]
+
+
+handler404 = "product.views.error_404"

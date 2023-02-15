@@ -4,7 +4,7 @@
 <section class="vh-100" style="background-color: #eee;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-9 col-xl-7">
+            <div class="col col-lg-10 col-xl-7">
                 <div class="card rounded-3">
                     <div class="card-body p-4">
 
@@ -32,7 +32,11 @@
                                     href="{% url 'create-product-order' %}">Add New Orders</a></button>
                             <button type="button" class="btn btn-success"><a
                                     style="color: black; text-decoration: none;"
-                                    href="{% url 'create-product-order' %}">delete some orders</a></button>
+                                    href="{% url 'delete-product-order' request.user.id%}">delete some
+                                    orders</a></button>
+                            <button type="button" class="btn btn-success"><a
+                                    style="color: black; text-decoration: none;"
+                                    href="{% url 'manager-change-status' %}">Changes Status to completed</a></button>
                         </div>
 
 
@@ -44,7 +48,7 @@
                             </li>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="ex1-tab-2" data-mdb-toggle="tab" href="#ex1-tabs-2" role="tab"
-                                    aria-controls="ex1-tabs-2" aria-selected="false">Active</a>
+                                    aria-controls="ex1-tabs-2" aria-selected="false">Not Completed</a>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <a class="nav-link" id="ex1-tab-3" data-mdb-toggle="tab" href="#ex1-tabs-3" role="tab"
@@ -57,10 +61,12 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No.</th>
-                                    <th scope="col">Todo item</th>
+                                    <th scope="col">Order Name</th>
                                     <th scope="col">Status</th>
                                     <th scope="col"> Date</th>
+                                    <th scope="col">Emergency Level</th>
                                     <th scope="col">Actions</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,6 +77,13 @@
                                     <td>{{order.name}}</td>
                                     <td>Not Completed yet</td>
                                     <td> {{order.created_time | time}}</td>
+                                    {%if order.emergency_level == 'low'%}
+                                    <td style="text-align: center; color: green;"> {{order.emergency_level}}</td>
+                                    {%elif order.emergency_level == 'medium'%}
+                                    <td style="text-align: center; color: blue;"> {{order.emergency_level}}</td>
+                                    {%elif order.emergency_level == 'high'%}
+                                    <td style="text-align: center; color: red;"> {{order.emergency_level}}</td>
+                                    {%endif%}
                                     <td>
                                         <button type="submit" class="btn btn-success ms-1">
                                             <a style="color: black; text-decoration: none;"
@@ -84,6 +97,13 @@
                                     <td style="text-decoration: line-through;">{{order.name}}</td>
                                     <td>Completed</td>
                                     <td> {{order.created_time |time}}</td>
+                                    {%if order.emergency_level == 'low'%}
+                                    <td style="text-align: center; color: green;"> {{order.emergency_level}}</td>
+                                    {%elif order.emergency_level == 'medium'%}
+                                    <td style="text-align: center; color: blue;"> {{order.emergency_level}}</td>
+                                    {%elif order.emergency_level == 'high'%}
+                                    <td style="text-align: center; color: red;"> {{order.emergency_level}}</td>
+                                    {%endif%}
                                     <td>
                                         <button type="submit" class="btn btn-success ms-1">
                                             <a style="color: black; text-decoration: none;"
