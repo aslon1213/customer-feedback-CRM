@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-ehe&@2qf%!g7!swc0wboy)os(1thorv-x^02xvyr&yqzs#3j)g"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -48,8 +48,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # django all auth
     # models
+    "product_for_order.apps.ProductConfig",
+    "user.apps.UserConfig",
     "product.apps.ProductConfig",
-    "user.apps.UserConfig"
     # 3rd party apps
     # "crispy_forms",
     # "crispy_bootstrap5",

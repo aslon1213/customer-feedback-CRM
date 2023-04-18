@@ -1,20 +1,11 @@
 from django.urls import path
-from .models import Product
-from .views import (
-    ProductListView,
-    create_product_order,
-    edit_product_order,
-    delete_product_order,
-    auto_make_products,
-    change_status,
-)
+from .views import *
 
 urlpatterns = [
     path("", ProductListView.as_view(), name="product-list"),
-    path("create/", create_product_order, name="create-product-order"),
-    path("edit/<str:pk>/", edit_product_order, name="edit-product-order"),
-    path("delete/<str:pk>/", delete_product_order, name="delete-product-order"),
-    path("manager_change_status/", change_status, name="manager-change-status"),
-    # for automation
-    path("create_automation/", auto_make_products, name="create-automation"),
+    path("create/", create_product, name="create-product"),
+    path("edit/<str:pk>/", edit_product, name="edit-product"),
+    path("delete/<str:pk>/", delete_product, name="delete-product"),
+    path("create_auto/", auto_make_products, name="create-auto"),
+    path("<str:pk>/", product_info, name="product-info"),
 ]

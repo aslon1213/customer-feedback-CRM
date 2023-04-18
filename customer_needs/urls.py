@@ -17,17 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 
 # import products views
-from product.views import (
+from product_for_order.views import (
     main_view,
 )
 
 urlpatterns = [
     path("", main_view, name="main_page"),
     path("admin/", admin.site.urls),
-    path("products/", include("product.urls")),
+    path("products_for_order/", include("product_for_order.urls")),
     path("users/", include("user.urls")),
     path("accounts/", include("allauth.urls")),
+    path("products/", include("product.urls")),
 ]
 
 
-handler404 = "product.views.error_404"
+# handler404 = "product_for_order.views.error_404"

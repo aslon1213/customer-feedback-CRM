@@ -426,11 +426,21 @@
                 </h3>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <button class="btn btn-dark"><a class="nav-link fw-bold py-1 px-0 active link-light"
-                            aria-current="page" href="">Home</a></button>
+                            aria-current="page" href="">Profile</a></button>
                     <button class="btn btn-dark"><a class="nav-link fw-bold py-1 px-0 link-light"
-                            href="">Features</a></button>
+                            href="{%url 'product-list'%}">Products
+                            List</a></button>
                     <button class="btn btn-dark"><a class="nav-link fw-bold py-1 px-0 link-light"
-                            href="">Contact</a></button>
+                            href="{%url 'order-list'%}">My
+                            orders</a></button>
+                    {% if request.user.is_authenticated %}
+                    <button class="btn btn-dark"><a class="nav-link fw-bold py-1 px-0 link-light"
+                            href="{% url 'account_logout' %}">Logout</a></button>
+                    {% else %}
+                    <button class="btn btn-dark"><a class="nav-link fw-bold py-1 px-0 link-light"
+                            href="{% url 'account_login' %}">Login</a></button>
+                    {% endif %}
+
 
 
                 </nav>

@@ -6,8 +6,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
 # import Product model from another app
-from product.models import Product
-
+from product_for_order.models import ProductForOrder as Product
 # Create your views here.
 from .models import User
 

@@ -1,14 +1,7 @@
-from django.forms import ModelForm
 from .models import Product
+from django import forms
 
-
-class CustomProductCreationForm(ModelForm):
-    class Meta(object):
+class ProductCreationForm(forms.ModelForm):
+    class Meta:
         model = Product
-        fields = ["name", "description"]
-
-
-class CustomProductCreationManagerForm(ModelForm):
-    class Meta(object):
-        model = Product
-        fields = ["name", "description", "in_stock", "number_in_stock"]
+        fields = "__all__"
