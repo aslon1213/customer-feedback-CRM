@@ -5,6 +5,15 @@ from django.db import models
 
 
 class Debt(models.Model):
+    # debt_taker = models.ForeignKey()
+    debt_taker = models.ForeignKey(
+        "DebtTaker",
+        blank=True,
+        related_name="debt_taker",
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    # models.ManyToOneRel
     title = models.CharField(max_length=120)
     description = models.TextField(blank=True, null=True)
     amount = models.FloatField(blank=True, null=False)
@@ -66,3 +75,16 @@ class MoneyChain(models.Model):
 
     def set_of_security_checks(self):
         pass
+
+
+class DebtTaker(models.Model):
+    first_name = models.CharField(max_length=120)
+    last_name = models.CharField(max_length=120, blank=True, null=True)
+    telephone = models.CharField(max_length=120, blank=True, null=True)
+    email = models.EmailField(max_length=120, blank=True, null=True)
+    telegram_username = models.CharField(max_length=120, blank=True, null=True)
+    passport_series = models.CharField(max_length=120, blank=True, null=True)
+    debts = models.ManyToManyField(Debt, blank=True, related_name="debt")
+
+    # ID
+    ID = models.UUIDField(primary_key=True, default=uuid4, editable=False, unique=True)

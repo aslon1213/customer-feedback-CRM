@@ -5,7 +5,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 # import messages
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
-from .models import Debt, MoneyChain
+from .models import Debt, MoneyChain, DebtTaker
 from django import http
 
 # Create your views here.
@@ -201,3 +201,11 @@ def get_debt_history(request, pk):
         template_name="debts/debt_history.html",
         context={"histories": histories, "debt": debt},
     )
+
+
+@staff_member_required(login_url="main_page")
+def debt_taker_page(request, pk):
+    debt_taker = DebtTaker.objects.get(ID=pk)
+    debts = Debt.objects.filter(debt_taker_id=pk)
+    context = {"debt_taker": debt_taker, "debts": debts}
+    return render(request, "debts/debt_taker_page.html", context=context)
