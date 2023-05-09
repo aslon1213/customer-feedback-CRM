@@ -1,6 +1,12 @@
 from uuid import UUID
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+import jinja2
+import pdfkit
+import time
+
+# import HTTPRESPONSE
+from django.http import HttpResponse
 
 # staff member required decorator
 from django.contrib.admin.views.decorators import staff_member_required
@@ -189,3 +195,37 @@ def error_404(request, exception):
 
 def main_view(request):
     return render(request, "main.html")
+
+
+import django
+
+
+def pdfmaker(request):
+    # check for user authentication
+    if not request.user.is_authenticated:
+        return redirect("account_login")
+    # check for user access
+    products = []
+    print(request.user.is_staff)
+    if request.user.is_staff:
+        products = ProductForOrder.objects.all()
+    else:
+        ProductForOrder.objects.filter(person_ordered_id=request.user.id)
+    context = {
+        "products": products,
+    }
+
+    template_loader = jinja2.FileSystemLoader("./")
+    template_env = jinja2.Environment(loader=template_loader)
+    template = template_env.get_template("/templates/order_to_pdf.html")
+
+    html = template.render(context)
+    config = pdfkit.configuration(wkhtmltopdf="/usr/local/bin/wkhtmltopdf")
+    options = {"enable-local-file-access": True}
+    pdf = pdfkit.from_string(html, False, configuration=config, options=options)
+    response = HttpResponse(pdf, content_type="application/pdf")
+    date = time.strftime("%d-%m-%Y")
+    response["Content-Disposition"] = "attachment; filename=" + ".pdf"
+    return django.http.response.HttpResponse(
+        pdf, content_type="application/pdf", response=response
+    )

@@ -1,0 +1,76 @@
+<style>
+    .styled-table {
+        border-collapse: collapse;
+        margin: 25px 0;
+        font-size: 0.9em;
+        font-family: sans-serif;
+        min-width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .styled-table thead tr {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+    }
+
+    .styled-table tbody tr {
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .styled-table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+    }
+
+    .styled-table tbody tr:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+
+    .styled-table tbody tr.active-high-row {
+        font-weight: bold;
+        color: #fa3605;
+    }
+
+    .styled-table tbody tr.active-medium-row {
+        font-weight: bold;
+        color: #a79600;
+    }
+</style>
+<table class="styled-table">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Person Ordered</th>
+            <th>Description</th>
+            <th>Emergency Level</th>
+            <th>Created Time</th>
+            <th>In Stock</th>
+            <th>Number In Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for item in products %}
+        {% if item.emergency_level == 'high'%}
+        <tr class="active-high-row">
+            {% elif item.emergency_level == 'medium'%}
+        <tr class="active-medium-row">
+            {%else%}
+        <tr>
+            {% endif %}
+            <td>{{item.name}}</td>
+            <td>{{item.person_ordered_id}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.emergency_level}}</td>
+            <td>{{item.created_time}}</td>
+            <td>{{item.in_stock}}</td>
+            <td>{{item.number_in_stock}}</td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>

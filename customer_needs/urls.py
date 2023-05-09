@@ -19,6 +19,7 @@ from django.urls import path, include
 # import products views
 from product_for_order.views import (
     main_view,
+    pdfmaker,
 )
 
 urlpatterns = [
@@ -28,7 +29,8 @@ urlpatterns = [
     path("users/", include("user.urls")),
     path("accounts/", include("allauth.urls")),
     path("products/", include("product.urls")),
+    path("debts/", include("debts.urls")),
 ]
 
 
-# handler404 = "product_for_order.views.error_404"
+handler404 = "product_for_order.views.error_404"
