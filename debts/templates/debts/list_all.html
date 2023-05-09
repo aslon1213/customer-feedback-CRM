@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Table -->
+    <style>
+        .styled-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .styled-table tbody tr.active-high-row {
+            font-weight: bold;
+            color: #fa3605;
+        }
+
+        .styled-table tbody tr.active-medium-row {
+            font-weight: bold;
+            color: #a79600;
+        }
+    </style>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>ID </th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>History</th>
+                <th> transaction minus </th>
+                <th> transaction plus </th>
+                <th style="color: red"> Delete LINK</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for item in debts %}
+            <tr>
+                <td>{{item.ID}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.amount}}</td>
+                <td>{{item.description}}</td>
+                <td><a href="{% url 'debt-history' item.ID %}"> ---> </a></td>
+                <td> <a href="{% url 'transaction-minus' item.ID%}"> Transaction Minus</a> </td>
+                <td> <a href="{% url 'transaction-plus' item.ID%}"> Transaction Plus</a> </td>
+                <td style="color: red;"> <a href="{% url 'delete-debt' item.ID%}"> delete</a> </td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <!-- debt info-->
+    <h1>Debt Info</h1>
+    <p>Title: {{debt.title}}</p>
+    <p>Description: {{debt.description}}</p>
+    <p>Amount: {{debt.amount}}</p>
+    <p>CreatedTime: {{debt.created_time |date:'Y-m-d'}}</p>
+    <table>
+        <th>
+            <thead>
+                <tr>
+                    <th>time</th>
+                    <th>value</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for history in histories %}
+                <tr>
+
+                    <td>{{history.created_time | date:'Y-m-d'}}</td>
+                    {% if history.positive %}
+                    <td style="color: rgb(24, 184, 56);"> +{{history.value}}</td>
+                    {% else %}
+                    <td style="color: red;"> -{{history.value}}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </th>
+    </table>
+
+</body>
+
+</html>

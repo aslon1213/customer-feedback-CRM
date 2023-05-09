@@ -7,6 +7,7 @@ from .views import (
     delete_product_order,
     auto_make_products,
     change_status,
+    pdfmaker,
 )
 
 urlpatterns = [
@@ -17,4 +18,5 @@ urlpatterns = [
     path("manager_change_status/", change_status, name="manager-change-status"),
     # for automation
     path("create_automation/", auto_make_products, name="create-automation"),
+    path("topdf/", pdfmaker, name="order-to-pdf"),
 ]

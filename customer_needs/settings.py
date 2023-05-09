@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     "product_for_order.apps.ProductConfig",
     "user.apps.UserConfig",
     "product.apps.ProductConfig",
+    "debts.apps.DebtsConfig",
     # 3rd party apps
     # "crispy_forms",
     # "crispy_bootstrap5",
