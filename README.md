@@ -7,3 +7,5 @@ things to be implemented
 5. OCR - image recognition algoritms 
 6. Image to text functionilaity 
 7. Customer chatbot using openai API
+8. Debts - debt takers
+9. Converting data to pdf
