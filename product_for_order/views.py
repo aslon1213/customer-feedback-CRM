@@ -226,6 +226,4 @@ def pdfmaker(request):
     response = HttpResponse(pdf, content_type="application/pdf")
     date = time.strftime("%d-%m-%Y")
     response["Content-Disposition"] = "attachment; filename=" + ".pdf"
-    return django.http.response.HttpResponse(
-        pdf, content_type="application/pdf", response=response
-    )
+    return django.http.response.HttpResponse(pdf, content_type="application/pdf")

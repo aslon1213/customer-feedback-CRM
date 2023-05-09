@@ -9,6 +9,15 @@
 </head>
 
 <body>
+
+    <!-- debtaker info -->
+    <h1>Debt Taker Info</h1>
+    <p>
+        Name: {{debt_taker.first_name}} {{debt_taker.second_name}} <br>
+        Phone: {{debt_taker.telephone}} <br>
+        Email: {{debt_taker.email}} <br>
+
+    </p>
     <style>
         table {
             border-collapse: collapse;
@@ -27,34 +36,30 @@
         }
     </style>
 
-    <!-- debt info-->
-    <h1>Debt Info</h1>
-    <p>Title: {{debt.title}}</p>
-    <p>Description: {{debt.description}}</p>
-    <p>Amount: {{debt.amount}}</p>
-    <p>CreatedTime: {{debt.created_time |date:'Y-m-d'}}</p>
     <table>
         <thead>
             <tr>
-                <th>time</th>
-                <th>value</th>
+                <th>ID </th>
+                <th>Amount</th>
+                <th>Date Created</th>
+                <th>Description</th>
+                <th> Link to Debt page</th>
             </tr>
         </thead>
         <tbody>
-            {% for history in histories %}
+            {%for debt in debts%}
             <tr>
-
-                <td>{{history.created_time | date:'Y-m-d'}}</td>
-                {% if history.positive %}
-                <td style="color: rgb(24, 184, 56);"> +{{history.value}}</td>
-                {% else %}
-                <td style="color: red;"> -{{history.value}}</td>
-                {% endif %}
+                <td>{{debt.ID}}</td>
+                <td>{{debt.amount}}</td>
+                <td>{{debt.created_time| date:'Y-m-d'}}</td>
+                <td>{{debt.description}}</td>
+                <td><a href="{%url 'debt-history' debt.ID%}">Link</a></td>
             </tr>
-            {% endfor %}
-
+            {%endfor%}
         </tbody>
+
     </table>
+
 
 </body>
 
