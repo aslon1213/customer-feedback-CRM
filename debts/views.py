@@ -11,6 +11,7 @@ from django import http
 # Create your views here.
 
 
+@login_required(login_url="account_login")
 @staff_member_required(login_url="account_login")
 def list_debts(request):
     debts = Debt.objects.all()
@@ -42,6 +43,10 @@ def create_debt(request):
         amount = request.POST["amount"]
         title = request.POST["title"]
         description = request.POST["description"]
+        debt_taker = DebtTaker.objects.create(
+            first_name="Someone",
+        )
+        debt_taker.save
         chain = MoneyChain.objects.create(
             previous=None,
             next=None,
@@ -55,6 +60,7 @@ def create_debt(request):
             description=description,
             moneyChain_first_index=chain,
             moneyChain_last_index=chain,
+            debt_taker=debt_taker,
         )
         obj.save
         return redirect("list-debts")

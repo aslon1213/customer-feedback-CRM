@@ -52,12 +52,15 @@ INSTALLED_APPS = [
     "user.apps.UserConfig",
     "product.apps.ProductConfig",
     "debts.apps.DebtsConfig",
+    "lending.apps.LendingConfig",
+    "workday_finance_management.apps.WorkdayFinanceManagementConfig",
     # 3rd party apps
     # "crispy_forms",
     # "crispy_bootstrap5",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "rest_framework",
 ]
 
 MIDDLEWARE = [

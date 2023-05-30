@@ -73,6 +73,7 @@
                             Products List
                         </a>
                     </li>
+
                     {%if request.user.is_authenticated%}
                     <li>
                         <a href="{% url 'customer-profile' request.user.id %}" class="nav-link text-white">
@@ -83,6 +84,14 @@
                         </a>
                     </li>
                     {%if request.user.is_staff %}
+                    <li>
+                        <a href="{% url 'journal_main' %}" fill="currentColor" class="nav-link text-white">
+                            <svg class="bi d-block mx-auto mb-1" width="24" height="24">
+                                <use xlink:href="#table"></use>
+                            </svg>
+                            Journal
+                        </a>
+                    </li>
                     <li>
                         <a href="{% url 'list-debts'%}" class="nav-link text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi d-block mx-auto mb-1"
@@ -96,6 +105,7 @@
                             Debts
                         </a>
                     </li>
+
                     {%endif%}
                     {%endif%}
                     <li>
