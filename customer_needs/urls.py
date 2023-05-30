@@ -24,12 +24,14 @@ from product_for_order.views import (
 
 urlpatterns = [
     path("", main_view, name="main_page"),
+    path("api/", include("rest_framework.urls")),
     path("admin/", admin.site.urls),
     path("products_for_order/", include("product_for_order.urls")),
     path("users/", include("user.urls")),
     path("accounts/", include("allauth.urls")),
     path("products/", include("product.urls")),
     path("debts/", include("debts.urls")),
+    path("journal/", include("workday_finance_management.urls")),
 ]
 
 

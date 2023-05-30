@@ -19,5 +19,5 @@ urlpatterns = [
     path("transaction/minus/<str:pk>", transaction_minus, name="transaction-minus"),
     path("delete/<str:pk>", delete_debt, name="delete-debt"),
     # debtaker
-    path("debtaker/<str:pk>", debt_taker_page, name="debt-taker-page"),
+    path("debtaker/<str:pk>/", debt_taker_page, name="debt-taker-page"),
 ]
